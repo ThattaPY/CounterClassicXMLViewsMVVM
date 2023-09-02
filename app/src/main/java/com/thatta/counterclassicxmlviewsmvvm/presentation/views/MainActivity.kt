@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
     private fun initFlagsRecyclerView() {
         val flagsList = mutableListOf<String>()
         flagsAdapter = FlagsAdapter(flagsList)
-        counterViewModel.getAllFlags()
         val flagsLayoutManager = LinearLayoutManager(this).apply {
             orientation = LinearLayoutManager.VERTICAL
         }
@@ -88,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         counterViewModel.allFlags.observe(this) {
-            flagsAdapter.updateFlags(it)
+            flagsAdapter.updateFlags(it, binding.rvMainActivityFlagsList)
         }
     }
 

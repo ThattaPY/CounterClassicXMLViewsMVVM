@@ -28,9 +28,11 @@ class FlagsAdapter(
         holder.bind(flagItem)
     }
 
-    fun updateFlags(newFlags: List<String>) {
+    // Method to update the list of flags
+    fun updateFlags(newFlags: List<String>, recyclerView: RecyclerView) {
         flagsList.clear()
         flagsList.addAll(newFlags)
         notifyDataSetChanged()
+        recyclerView.scrollToPosition(flagsList.size - 1)
     }
 }
