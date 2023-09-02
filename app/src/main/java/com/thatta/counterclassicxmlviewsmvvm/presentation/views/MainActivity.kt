@@ -2,6 +2,7 @@ package com.thatta.counterclassicxmlviewsmvvm.presentation.views
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.LayoutDirection
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,9 +40,7 @@ class MainActivity : AppCompatActivity() {
     private fun initFlagsRecyclerView() {
         val flagsList = mutableListOf<String>()
         flagsAdapter = FlagsAdapter(flagsList)
-        val flagsLayoutManager = LinearLayoutManager(this).apply {
-            orientation = LinearLayoutManager.VERTICAL
-        }
+        val flagsLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
         binding.rvMainActivityFlagsList.layoutManager = flagsLayoutManager
         binding.rvMainActivityFlagsList.adapter = flagsAdapter
     }
@@ -70,7 +69,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun initObservers() {
         counterViewModel.counter.observe(this) {
             binding.tvMainActivityCounter.text = it.toString()

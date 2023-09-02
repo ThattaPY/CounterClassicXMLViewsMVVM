@@ -62,7 +62,7 @@ class CounterViewModel(private val repository: DataRepository) : ViewModel() {
 
     fun insertFlag() {
         viewModelScope.launch(Dispatchers.IO) {
-            InsertFlagUseCase.insertFlag(repository, _counter.value!!.toString())
+            InsertFlagUseCase.insertFlag(repository, _counter.value?.toString() ?: "0")
         }
     }
 

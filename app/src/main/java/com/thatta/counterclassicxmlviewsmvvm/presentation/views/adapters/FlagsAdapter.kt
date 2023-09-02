@@ -1,5 +1,7 @@
 package com.thatta.counterclassicxmlviewsmvvm.presentation.views.adapters
 
+import android.annotation.SuppressLint
+import android.icu.text.Transliterator.Position
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -29,10 +31,11 @@ class FlagsAdapter(
     }
 
     // Method to update the list of flags
+    @SuppressLint("NotifyDataSetChanged")
     fun updateFlags(newFlags: List<String>, recyclerView: RecyclerView) {
         flagsList.clear()
         flagsList.addAll(newFlags)
         notifyDataSetChanged()
-        recyclerView.scrollToPosition(flagsList.size - 1)
+        recyclerView.scrollToPosition(- flagsList.size - 1)
     }
 }
