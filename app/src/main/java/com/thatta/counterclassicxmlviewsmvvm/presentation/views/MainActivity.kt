@@ -1,8 +1,6 @@
 package com.thatta.counterclassicxmlviewsmvvm.presentation.views
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.LayoutDirection
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,16 +8,20 @@ import com.thatta.counterclassicxmlviewsmvvm.R
 import com.thatta.counterclassicxmlviewsmvvm.data.repositories.DataRepository
 import com.thatta.counterclassicxmlviewsmvvm.databinding.ActivityMainBinding
 import com.thatta.counterclassicxmlviewsmvvm.domain.CounterApplication
+import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.CounterUseCase
+import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.InsertFlagUseCase
 import com.thatta.counterclassicxmlviewsmvvm.presentation.viewModels.CounterViewModel
 import com.thatta.counterclassicxmlviewsmvvm.presentation.views.adapters.FlagsAdapter
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var counterViewModelFactory: CounterViewModel.BrowserViewModelFactory
+    private lateinit var counterViewModelFactory: CounterViewModel.CounterViewModelFactory
     private lateinit var counterViewModel: CounterViewModel
     private lateinit var application: CounterApplication
     private lateinit var repository: DataRepository
+    private lateinit var counterUseCase: CounterUseCase
+    private lateinit var insertFlagUseCase: InsertFlagUseCase
     private lateinit var flagsAdapter: FlagsAdapter
 
 
@@ -28,6 +30,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initApplicationClasses()
+
         initViewModels()
 
         initFlagsRecyclerView()
@@ -35,6 +39,13 @@ class MainActivity : AppCompatActivity() {
         initListeners()
         initObservers()
 
+    }
+
+    private fun initApplicationClasses() {
+        application = getApplication() as CounterApplication
+        repository = application.dataRepository
+        counterUseCase = application.counterUseCase
+        insertFlagUseCase = application.insertFlagUseCase
     }
 
     private fun initFlagsRecyclerView() {
@@ -46,9 +57,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModels() {
-        application = getApplication() as CounterApplication
-        repository = application.dataRepository
-        counterViewModelFactory = CounterViewModel.BrowserViewModelFactory(repository)
+
+        counterViewModelFactory =
+            CounterViewModel.CounterViewModelFactory(repository, counterUseCase, insertFlagUseCase)
         counterViewModel =
             ViewModelProvider(this, counterViewModelFactory)[CounterViewModel::class.java]
     }
