@@ -8,6 +8,7 @@
     tools:context=".presentation.views.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_main_activity_flags_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/big_dimen"
@@ -15,7 +16,8 @@
         app:layout_constraintBottom_toTopOf="@id/tv_main_activity_counter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/flag_item" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_main_activity_counter"
@@ -26,13 +28,15 @@
         android:text="@string/zero_int_value"
         app:layout_constraintBottom_toTopOf="@id/btn_main_activity_start_counter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rv_main_activity_flags_list" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_main_activity_start_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_counter"
+        app:layout_constraintTop_toBottomOf="@id/tv_main_activity_counter"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

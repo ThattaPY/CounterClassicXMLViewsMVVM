@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.thatta.counterclassicxmlviewsmvvm.data.repositories.DataRepository
-import com.thatta.counterclassicxmlviewsmvvm.domain.entities.FlagsModel
 import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.CounterUseCase
 import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.InsertFlagUseCase
 import kotlinx.coroutines.Dispatchers
@@ -14,6 +13,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class CounterViewModel(private val repository: DataRepository) : ViewModel() {
+
 
     // UI vars
     // LiveData for counter to use internally in this ViewModel
@@ -26,6 +26,11 @@ class CounterViewModel(private val repository: DataRepository) : ViewModel() {
     private val _isCounterEnabled = MutableLiveData<Boolean>()
     val isCounterEnabled: LiveData<Boolean> get() = _isCounterEnabled
 
+    // LiveData for flags to be observe in other classes
+    private val _allFlags = MutableLiveData<List<String>>()
+    val allFlags: LiveData<List<String>> get() = _allFlags
+
+    // UseCase
     private val counterUseCase = CounterUseCase(viewModelScope)
 
 
@@ -37,16 +42,19 @@ class CounterViewModel(private val repository: DataRepository) : ViewModel() {
 
     //Method to start counter
     fun startCounter() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllFlags()
-        }
         counterUseCase.startCounter()
         _isCounterEnabled.value = true
         viewModelScope.launch(Dispatchers.Main) {
             while (_isCounterEnabled.value!!) {
                 delay(70)
-                _counter.postValue(counterUseCase.getCounter())
+                _counter.value = counterUseCase.getCounter()
             }
+        }
+    }
+
+    fun deleteAllFlags() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteAllFlags()
         }
     }
 
@@ -59,7 +67,13 @@ class CounterViewModel(private val repository: DataRepository) : ViewModel() {
 
     fun insertFlag() {
         viewModelScope.launch(Dispatchers.IO) {
-            InsertFlagUseCase.insertFlag(counterUseCase.getCounter().toString())
+            InsertFlagUseCase.insertFlag(repository, counterUseCase.getCounter().toString())
+        }
+    }
+
+    fun getAllFlags() {
+        repository.getAllFlags().observeForever { flagsFromRepo ->
+            _allFlags.value = flagsFromRepo.map { it.flag }
         }
     }
 
