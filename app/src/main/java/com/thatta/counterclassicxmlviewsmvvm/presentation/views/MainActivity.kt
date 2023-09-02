@@ -60,7 +60,6 @@ class MainActivity : AppCompatActivity() {
                 if (it == true) {
                     counterViewModel.stopCounter()
                 } else if (it == false || it == null) {
-                    counterViewModel.deleteAllFlags()
                     counterViewModel.startCounter()
                 }
             }
@@ -68,7 +67,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.ibMainActivityFlag.setOnClickListener {
             counterViewModel.insertFlag()
-            counterViewModel.getAllFlags()
         }
     }
 

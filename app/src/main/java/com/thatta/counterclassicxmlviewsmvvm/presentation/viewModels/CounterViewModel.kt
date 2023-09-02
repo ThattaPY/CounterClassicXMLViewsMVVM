@@ -31,12 +31,20 @@ class CounterViewModel(private val repository: DataRepository) : ViewModel() {
     val allFlags: LiveData<List<String>> get() = _allFlags
 
     // UseCase
-    private val counterUseCase = CounterUseCase(viewModelScope)
+    private val counterUseCase = CounterUseCase(viewModelScope, repository)
 
 
     init {
-        counterUseCase.getCounter().let {
-            _counter.value = it
+        initObservers()
+    }
+
+    private fun initObservers() {
+        counterUseCase.counter.observeForever { counterFromUseCase ->
+            _counter.value = counterFromUseCase
+        }
+
+        repository.getAllFlags().observeForever { flagsFromRepo ->
+            _allFlags.value = flagsFromRepo.map { it.flag }
         }
     }
 
@@ -44,39 +52,19 @@ class CounterViewModel(private val repository: DataRepository) : ViewModel() {
     fun startCounter() {
         counterUseCase.startCounter()
         _isCounterEnabled.value = true
-        viewModelScope.launch(Dispatchers.Main) {
-            while (_isCounterEnabled.value!!) {
-                delay(70)
-                _counter.value = counterUseCase.getCounter()
-            }
-        }
-    }
-
-    fun deleteAllFlags() {
-        viewModelScope.launch(Dispatchers.IO) {
-            repository.deleteAllFlags()
-        }
     }
 
     //Method to stop counter
     fun stopCounter() {
         counterUseCase.stopCounter()
         _isCounterEnabled.value = false
-        _counter.postValue(counterUseCase.getCounter())
     }
 
     fun insertFlag() {
         viewModelScope.launch(Dispatchers.IO) {
-            InsertFlagUseCase.insertFlag(repository, counterUseCase.getCounter().toString())
+            InsertFlagUseCase.insertFlag(repository, _counter.value!!.toString())
         }
     }
-
-    fun getAllFlags() {
-        repository.getAllFlags().observeForever { flagsFromRepo ->
-            _allFlags.value = flagsFromRepo.map { it.flag }
-        }
-    }
-
 
     // Factory for constructing CounterViewModel with parameter
     class BrowserViewModelFactory(private val repository: DataRepository) :
