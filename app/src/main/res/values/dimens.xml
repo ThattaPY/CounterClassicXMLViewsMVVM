@@ -2,4 +2,5 @@
 <resources>
     <dimen name="mid_dimen">8dp</dimen>
     <dimen name="ib_dimen">52dp</dimen>
+    <dimen name="big_dimen">64dp</dimen>
 </resources>

@@ -4,7 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/big_dimen"
     tools:context=".presentation.views.MainActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/big_dimen"
+        android:layout_marginBottom="@dimen/mid_dimen"
+        app:layout_constraintBottom_toTopOf="@id/tv_main_activity_counter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_main_activity_counter"
@@ -13,27 +24,26 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/mid_dimen"
         android:text="@string/zero_int_value"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/btn_main_activity_start_counter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_main_activity_start_counter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/start_counter"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_main_activity_counter" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/ib_main_activity_flag"
         android:layout_width="@dimen/ib_dimen"
         android:layout_height="@dimen/ib_dimen"
         android:backgroundTint="@color/orange"
         android:src="@drawable/flag_circle"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/btn_main_activity_start_counter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_main_activity_start_counter" />
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
