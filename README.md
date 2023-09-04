@@ -1,6 +1,5 @@
 # CounterClassicXMLViewsMVVM
 This app is a simply MVVM demo of my skills
-the app has made in 5 hours
 
 The code uses best practices
 dimens and strings in their respective .xml
