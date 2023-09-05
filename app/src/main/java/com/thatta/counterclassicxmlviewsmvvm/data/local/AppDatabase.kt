@@ -7,7 +7,6 @@ import androidx.room.RoomDatabase
 import com.thatta.counterclassicxmlviewsmvvm.data.dataUtils.DataConstants
 import com.thatta.counterclassicxmlviewsmvvm.data.local.flagsTable.FlagsDao
 import com.thatta.counterclassicxmlviewsmvvm.domain.entities.FlagsModel
-import kotlinx.coroutines.CoroutineScope
 
 @Database(
     entities = [FlagsModel::class],

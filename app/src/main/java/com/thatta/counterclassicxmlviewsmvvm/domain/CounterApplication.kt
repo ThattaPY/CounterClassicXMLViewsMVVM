@@ -8,9 +8,10 @@ import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.InsertFlagUseCase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
+// Application class to initialize the database, repository, use cases and be able to inject them
 class CounterApplication: Application() {
-    private val applicationScope = CoroutineScope(SupervisorJob())
 
+    // by lazy to initialize the database only when it's needed
     private val appDatabase by lazy { AppDatabase.getDatabase(this) }
 
     val dataRepository by lazy {

@@ -2,7 +2,6 @@ package com.thatta.counterclassicxmlviewsmvvm.domain.usesCases
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.thatta.counterclassicxmlviewsmvvm.data.repositories.DataRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

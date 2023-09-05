@@ -1,7 +1,6 @@
 package com.thatta.counterclassicxmlviewsmvvm.presentation.views.adapters
 
 import android.annotation.SuppressLint
-import android.icu.text.Transliterator.Position
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
