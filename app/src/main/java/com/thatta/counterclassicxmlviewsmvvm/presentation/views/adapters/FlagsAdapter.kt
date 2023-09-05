@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.thatta.counterclassicxmlviewsmvvm.databinding.FlagItemBinding
 
 class FlagsAdapter(
-    private val flagsList: MutableList<String>
+    private val flagsList: MutableList<Int>
 ) : RecyclerView.Adapter<FlagsAdapter.FlagsViewHolder>() {
     inner class FlagsViewHolder(private val itemBinding: FlagItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
-        fun bind(flag: String) {
-            itemBinding.tvFlagItemNumber.text = flag
+        fun bind(flag: Int) {
+            itemBinding.tvFlagItemNumber.text = flag.toString()
         }
     }
 
@@ -32,7 +32,7 @@ class FlagsAdapter(
 
     // Method to update the list of flags
     @SuppressLint("NotifyDataSetChanged")
-    fun updateFlags(newFlags: List<String>, recyclerView: RecyclerView) {
+    fun updateFlags(newFlags: List<Int>, recyclerView: RecyclerView) {
         flagsList.clear()
         flagsList.addAll(newFlags)
         notifyDataSetChanged()

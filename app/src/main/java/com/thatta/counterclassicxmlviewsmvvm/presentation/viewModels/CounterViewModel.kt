@@ -30,8 +30,8 @@ class CounterViewModel(
     val isCounterEnabled: LiveData<Boolean> get() = _isCounterEnabled
 
     // LiveData for flags to be observe in other classes
-    private val _allFlags = MutableLiveData<List<String>>()
-    val allFlags: LiveData<List<String>> get() = _allFlags
+    private val _allFlags = MutableLiveData<List<Int>>()
+    val allFlags: LiveData<List<Int>> get() = _allFlags
 
     init {
         initObservers()
@@ -74,7 +74,7 @@ class CounterViewModel(
     //Method to insert flag
     fun insertFlag() {
         viewModelScope.launch(Dispatchers.IO) {
-            insertFlagUseCase.insertFlag(repository, _counter.value?.toString() ?: "0")
+            insertFlagUseCase.insertFlag(repository, _counter.value ?: 0)
         }
     }
 

@@ -93,7 +93,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initFlagsRecyclerView() {
-        val flagsList = mutableListOf<String>()
+        val flagsList = mutableListOf<Int>()
         flagsAdapter = FlagsAdapter(flagsList)
         val flagsLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
         binding.rvMainActivityFlagsList.layoutManager = flagsLayoutManager
