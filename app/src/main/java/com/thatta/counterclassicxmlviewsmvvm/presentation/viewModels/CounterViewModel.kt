@@ -19,10 +19,10 @@ class CounterViewModel(
 
 
     // UI vars
-    // LiveData for counter to use internally in this ViewModel
+    // MutableLiveData for counter to use internally in this ViewModel and change it's value
     private val _counter = MutableLiveData<Int>()
 
-    // LiveData for counter to be observe in other classes
+    // LiveData for counter to be observe in other classes, get value from _counter
     val counter: LiveData<Int> get() = _counter
 
     // Same as above but for isCounterEnabled
