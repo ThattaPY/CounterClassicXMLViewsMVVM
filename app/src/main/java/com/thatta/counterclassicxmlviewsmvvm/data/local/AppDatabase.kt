@@ -11,28 +11,24 @@ import kotlinx.coroutines.CoroutineScope
 
 @Database(
     entities = [FlagsModel::class],
-    version = 5,
+    version = 1,
     exportSchema = false
-//    ,autoMigrations = [AutoMigration (from = 1, to = 2)]
 )
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
 
     abstract fun flagsDao(): FlagsDao
-
-    private class CounterDatabaseCallback(private val scope: CoroutineScope)
-        : Callback()
 
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
-        fun getDatabase(context: Context, scope: CoroutineScope): AppDatabase {
+        fun getDatabase(context: Context): AppDatabase {
             return INSTANCE ?: synchronized(this) {
-                val  instance = Room.databaseBuilder(
+                val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    DataConstants.DATABASE_NAME)
-                    .addCallback(CounterDatabaseCallback(scope))
+                    DataConstants.DATABASE_NAME
+                )
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance

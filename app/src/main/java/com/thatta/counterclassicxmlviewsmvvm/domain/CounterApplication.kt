@@ -11,7 +11,7 @@ import kotlinx.coroutines.SupervisorJob
 class CounterApplication: Application() {
     private val applicationScope = CoroutineScope(SupervisorJob())
 
-    private val appDatabase by lazy { AppDatabase.getDatabase(this, applicationScope) }
+    private val appDatabase by lazy { AppDatabase.getDatabase(this) }
 
     val dataRepository by lazy {
         DataRepository(
