@@ -49,15 +49,26 @@ class CounterViewModel(
     }
 
     //Method to start counter
-    fun startCounter() {
+    private fun startCounter() {
         counterUseCase.startCounter()
         _isCounterEnabled.value = true
     }
 
     //Method to stop counter
-    fun stopCounter() {
+    private fun stopCounter() {
         counterUseCase.stopCounter()
         _isCounterEnabled.value = false
+    }
+
+    // Method so start or stop counter depending on isCounterEnabled
+    fun toggleCounter() {
+        isCounterEnabled.value.let {
+            if (it == true) {
+                stopCounter()
+            } else if (it == false || it == null) {
+                startCounter()
+            }
+        }
     }
 
     //Method to insert flag

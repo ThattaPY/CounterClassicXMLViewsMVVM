@@ -66,13 +66,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initListeners() {
         binding.btnMainActivityStartCounter.setOnClickListener {
-            counterViewModel.isCounterEnabled.value.let {
-                if (it == true) {
-                    counterViewModel.stopCounter()
-                } else if (it == false || it == null) {
-                    counterViewModel.startCounter()
-                }
-            }
+            counterViewModel.toggleCounter()
         }
 
         binding.ibMainActivityFlag.setOnClickListener {
