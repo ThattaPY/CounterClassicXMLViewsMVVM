@@ -12,6 +12,7 @@ import com.thatta.counterclassicxmlviewsmvvm.domain.entities.FlagsModel
 interface FlagsDao {
     @Query("SELECT * FROM ${DataConstants.TABLE_NAME}")
     fun getAllFlags(): LiveData<List<FlagsModel>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFlag(flag: FlagsModel)
 

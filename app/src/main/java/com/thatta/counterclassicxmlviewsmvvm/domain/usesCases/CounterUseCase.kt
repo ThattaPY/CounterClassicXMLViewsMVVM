@@ -20,7 +20,7 @@ interface CounterUseCaseInterface {
 class CounterUseCase @Inject constructor(
     private val viewModelScope: CoroutineScope,
     private val repository: DataRepository
-): CounterUseCaseInterface {
+) : CounterUseCaseInterface {
 
     private var counterJob: Job? = null
     private var isCounterEnabled: Boolean = false

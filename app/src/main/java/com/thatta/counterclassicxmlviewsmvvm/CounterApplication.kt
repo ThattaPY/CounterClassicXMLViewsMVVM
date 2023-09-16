@@ -7,4 +7,4 @@ import dagger.hilt.android.HiltAndroidApp
 
 // Hilt annotation to inject dependencies
 @HiltAndroidApp
-class CounterApplication: Application(){}
+class CounterApplication : Application()

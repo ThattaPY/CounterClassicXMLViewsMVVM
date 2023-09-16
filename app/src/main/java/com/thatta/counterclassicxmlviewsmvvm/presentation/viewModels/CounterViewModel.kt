@@ -76,7 +76,6 @@ class CounterViewModel @Inject constructor(
     }
 
 
-
     //Method to start counter
     private fun startCounter() {
         counterUseCase.startCounter()

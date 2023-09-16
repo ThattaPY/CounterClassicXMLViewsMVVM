@@ -10,7 +10,8 @@ interface GetAllFlagsUseCaseInterface {
     val allFlags: LiveData<List<FlagsModel>>
 }
 
-class GetAllFlagsUseCase @Inject constructor(private val repository: DataRepository) : GetAllFlagsUseCaseInterface {
+class GetAllFlagsUseCase @Inject constructor(private val repository: DataRepository) :
+    GetAllFlagsUseCaseInterface {
 
     // LiveData for flags to be observe in other classes,
     // mutable to be able to change it's value internally

@@ -16,8 +16,10 @@ import dagger.hilt.components.SingletonComponent
 abstract class UseCaseModule {
     @Binds
     abstract fun bindCounterUseCase(impl: CounterUseCase): CounterUseCaseInterface
+
     @Binds
     abstract fun bindInsertFlagUseCase(impl: InsertFlagUseCase): InsertFlagUseCaseInterface
+
     @Binds
     abstract fun bindGetAllFlagsUseCase(impl: GetAllFlagsUseCase): GetAllFlagsUseCaseInterface
 

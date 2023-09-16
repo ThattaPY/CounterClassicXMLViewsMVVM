@@ -9,7 +9,8 @@ import com.thatta.counterclassicxmlviewsmvvm.databinding.FlagItemBinding
 class FlagsAdapter(
     private val flagsList: MutableList<Int>
 ) : RecyclerView.Adapter<FlagsAdapter.FlagsViewHolder>() {
-    inner class FlagsViewHolder(private val itemBinding: FlagItemBinding) : RecyclerView.ViewHolder(itemBinding.root) {
+    inner class FlagsViewHolder(private val itemBinding: FlagItemBinding) :
+        RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(flag: Int) {
             itemBinding.tvFlagItemNumber.text = flag.toString()
         }
@@ -25,7 +26,7 @@ class FlagsAdapter(
     override fun getItemCount(): Int = flagsList.size
 
     override fun onBindViewHolder(holder: FlagsViewHolder, position: Int) {
-       val flagItem = flagsList[position]
+        val flagItem = flagsList[position]
         holder.bind(flagItem)
     }
 
@@ -35,6 +36,6 @@ class FlagsAdapter(
         flagsList.clear()
         flagsList.addAll(newFlags)
         notifyDataSetChanged()
-        recyclerView.scrollToPosition(- flagsList.size - 1)
+        recyclerView.scrollToPosition(-flagsList.size - 1)
     }
 }
