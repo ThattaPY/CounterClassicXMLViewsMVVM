@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.thatta.counterclassicxmlviewsmvvm.domain.entities.FlagsModel
 import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.CounterUseCaseInterface
 import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.GetAllFlagsUseCase
+import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.GetAllFlagsUseCaseInterface
 import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.InsertFlagUseCaseInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,9 +17,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CounterViewModel @Inject constructor(
-    private val counterUseCase: CounterUseCaseInterface,
+    private var counterUseCase: CounterUseCaseInterface,
     private val insertFlagUseCase: InsertFlagUseCaseInterface,
-    private val getFlagsUseCase: GetAllFlagsUseCase
+    private val getFlagsUseCase: GetAllFlagsUseCaseInterface
 ) : ViewModel() {
 
 
