@@ -1,30 +1,21 @@
 package com.thatta.counterclassicxmlviewsmvvm.presentation.views
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.thatta.counterclassicxmlviewsmvvm.R
-import com.thatta.counterclassicxmlviewsmvvm.data.repositories.DataRepository
 import com.thatta.counterclassicxmlviewsmvvm.databinding.ActivityMainBinding
-import com.thatta.counterclassicxmlviewsmvvm.domain.CounterApplication
-import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.CounterUseCase
-import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.InsertFlagUseCase
 import com.thatta.counterclassicxmlviewsmvvm.presentation.viewModels.CounterViewModel
 import com.thatta.counterclassicxmlviewsmvvm.presentation.views.adapters.FlagsAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var counterViewModelFactory: CounterViewModel.CounterViewModelFactory
-    private lateinit var counterViewModel: CounterViewModel
-
-    private lateinit var application: CounterApplication
-
-    private lateinit var repository: DataRepository
-    private lateinit var counterUseCase: CounterUseCase
-    private lateinit var insertFlagUseCase: InsertFlagUseCase
+    private val counterViewModel by viewModels<CounterViewModel>()
 
     private lateinit var flagsAdapter: FlagsAdapter
 
@@ -34,32 +25,11 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initApplicationClasses()
-
-        initViewModels()
-
         initFlagsRecyclerView()
 
         initListeners()
         initObservers()
 
-    }
-
-    // Method to initialize application classes ang get instances of them
-    // to be injected into ViewModel
-    private fun initApplicationClasses() {
-        application = getApplication() as CounterApplication
-        repository = application.dataRepository
-        counterUseCase = application.counterUseCase
-        insertFlagUseCase = application.insertFlagUseCase
-    }
-
-    private fun initViewModels() {
-        // uses ViewModelFactory to inject dependencies into ViewModel
-        counterViewModelFactory =
-            CounterViewModel.CounterViewModelFactory(repository, counterUseCase, insertFlagUseCase)
-        counterViewModel =
-            ViewModelProvider(this, counterViewModelFactory)[CounterViewModel::class.java]
     }
 
     private fun initListeners() {
