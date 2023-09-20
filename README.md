@@ -12,3 +12,4 @@ The app uses a class that extends from Application()
 this class control over the app lifecycle the coroutines scopes
 and create an instance of repository to use in a global scope
 In domain layer we found uses-cases that isolates the bussiness-logic
+--
