@@ -1,12 +1,11 @@
 package com.thatta.counterclassicxmlviewsmvvm.presentation.views.adapters
 
 
-import com.thatta.counterclassicxmlviewsmvvm.R
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.thatta.counterclassicxmlviewsmvvm.R
 import com.thatta.counterclassicxmlviewsmvvm.databinding.FlagItemBinding
 
 class FlagsAdapter(

@@ -1,9 +1,6 @@
 package com.thatta.counterclassicxmlviewsmvvm.domain.usesCases
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.thatta.counterclassicxmlviewsmvvm.data.repositories.DataRepository
-import com.thatta.counterclassicxmlviewsmvvm.domain.entities.FlagsModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

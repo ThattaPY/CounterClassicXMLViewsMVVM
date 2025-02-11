@@ -2,18 +2,14 @@ package com.thatta.counterclassicxmlviewsmvvm.presentation.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.thatta.counterclassicxmlviewsmvvm.domain.entities.FlagsModel
 import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.CounterUseCaseInterface
-import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.GetAllFlagsUseCase
 import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.GetAllFlagsUseCaseInterface
 import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.InsertFlagUseCaseInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
