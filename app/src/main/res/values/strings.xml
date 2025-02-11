@@ -3,4 +3,5 @@
     <string name="start_counter">Start counter</string>
     <string name="stop_counter">Stop counter</string>
     <string name="zero_int_value">0</string>
+    <string name="value">%1$s</string>
 </resources>

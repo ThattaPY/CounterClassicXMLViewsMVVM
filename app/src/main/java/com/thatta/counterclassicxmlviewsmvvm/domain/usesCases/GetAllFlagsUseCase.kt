@@ -4,30 +4,23 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.thatta.counterclassicxmlviewsmvvm.data.repositories.DataRepository
 import com.thatta.counterclassicxmlviewsmvvm.domain.entities.FlagsModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 interface GetAllFlagsUseCaseInterface {
-    val allFlags: LiveData<List<FlagsModel>>
+    val allFlags: Flow<List<Int>>
 }
 
 class GetAllFlagsUseCase @Inject constructor(private val repository: DataRepository) :
     GetAllFlagsUseCaseInterface {
 
-    // LiveData for flags to be observe in other classes,
-    // mutable to be able to change it's value internally
-    private val _allFlags = MutableLiveData<List<FlagsModel>>()
-    override val allFlags: LiveData<List<FlagsModel>> get() = _allFlags
-
-    // init block to get all flags from repository
-    init {
-        getAllFlags()
-    }
-
-    // Method to get all flags from repository
-    private fun getAllFlags() {
-        repository.getAllFlags().observeForever { flagsFromRepository ->
-            _allFlags.value = flagsFromRepository.sortedBy { it.flag }
+        // Get all flags from repository and map them to a list of flags
+        // sorted by flag value. Exposure of the flags as a Flow
+    override val allFlags: Flow<List<Int>>
+        get() = repository.getAllFlags().map { flags ->
+            flags.sortedBy { it.flag }
+                .map { it.flag }
         }
-    }
 
 }

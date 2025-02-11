@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.thatta.counterclassicxmlviewsmvvm.domain.entities.FlagsModel
 import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.CounterUseCaseInterface
@@ -12,6 +13,7 @@ import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.GetAllFlagsUseCase
 import com.thatta.counterclassicxmlviewsmvvm.domain.usesCases.InsertFlagUseCaseInterface
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -22,59 +24,18 @@ class CounterViewModel @Inject constructor(
     private val getFlagsUseCase: GetAllFlagsUseCaseInterface
 ) : ViewModel() {
 
+    // LiveData for counter to be observe in other classes, get value from counterUseCase
+    val counter: LiveData<Int> get() = counterUseCase.counter
 
-    // UI vars
-    // MutableLiveData for counter to use internally in this ViewModel and change it's value
-    private val _counter = MutableLiveData<Int>()
 
-    // LiveData for counter to be observe in other classes, get value from _counter
-    val counter: LiveData<Int> get() = _counter
-
-    // Same as above but for isCounterEnabled
+    // LiveData for isCounterEnabled to be observe in other classes,
+    // used private MutableLiveData to change value in this class and LiveData to be observed in other classes
     private val _isCounterEnabled = MutableLiveData<Boolean>()
     val isCounterEnabled: LiveData<Boolean> get() = _isCounterEnabled
 
-    // LiveData for flags to be observe in other classes
-    private val _allFlags = MutableLiveData<List<Int>>()
-    val allFlags: LiveData<List<Int>> get() = _allFlags
-
-    // Observers, late init to be initialized in init block
-    private lateinit var counterObserver: Observer<Int>
-    private lateinit var allFlagsObserver: Observer<List<FlagsModel>>
-
-    init {
-        initCounterObservers()
-        initAllFlagsObserver()
-    }
-
-    // Remove observers when ViewModel is cleared
-    override fun onCleared() {
-        super.onCleared()
-        // Remove observers
-        counterUseCase.counter.removeObserver(counterObserver)
-        getFlagsUseCase.allFlags.removeObserver(allFlagsObserver)
-    }
-
-    // Method to observe counter from counterUseCase
-    private fun initCounterObservers() {
-        // Create an Observer to observe counterUseCase.counter
-        counterObserver = Observer<Int> { counterFromUseCase ->
-            _counter.value = counterFromUseCase
-        }
-        // register counterObserver
-        counterUseCase.counter.observeForever(counterObserver)
-    }
-
-    // Method to observe allFlags from getFlagsUseCase
-    private fun initAllFlagsObserver() {
-
-        // Create an Observer to observe getFlagsUseCase.allFlags
-        allFlagsObserver = Observer { flagsFromUseCase ->
-            _allFlags.value = flagsFromUseCase.map { it.flag }
-        }
-        // register allFlagsObserver
-        getFlagsUseCase.allFlags.observeForever(allFlagsObserver)
-    }
+    // LiveData for allFlags to be observe in other classes, get value from getFlagsUseCase
+    // getFlagsUseCase returns a Flow, so we need to convert it to LiveData to be used in the UI
+    val allFlags: LiveData<List<Int>> get() = getFlagsUseCase.allFlags.asLiveData()
 
 
     //Method to start counter
@@ -103,7 +64,7 @@ class CounterViewModel @Inject constructor(
     //Method to insert flag
     fun insertFlag() {
         viewModelScope.launch(Dispatchers.IO) {
-            insertFlagUseCase.insertFlag(_counter.value ?: 0)
+            insertFlagUseCase.insertFlag(counter.value ?: 0)
         }
     }
 

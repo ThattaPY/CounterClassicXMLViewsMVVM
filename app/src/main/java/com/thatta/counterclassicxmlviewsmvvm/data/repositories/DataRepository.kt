@@ -9,6 +9,8 @@ class DataRepository @Inject constructor(
 ) {
 
     fun getAllFlags() = flagsDao.getAllFlags()
+
     suspend fun insertFlag(flag: FlagsModel) = flagsDao.insertFlag(flag)
+
     fun deleteAllFlags() = flagsDao.deleteAllFlags()
 }

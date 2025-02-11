@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         initFlagsRecyclerView()
 
         initListeners()
+
         initObservers()
 
     }
@@ -44,11 +45,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initObservers() {
         counterViewModel.counter.observe(this) {
-            binding.tvMainActivityCounter.text = it.toString()
+            binding.tvMainActivityCounter.text = getString(R.string.value, it.toString())
         }
 
         // The observer has logic because it's UI-only logic
-        // and ViewModel should not have to interact with Android resources
         counterViewModel.isCounterEnabled.observe(this) {
             if (it) {
                 binding.btnMainActivityStartCounter.text = this.getString(R.string.stop_counter)
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFlagsRecyclerView() {
         val flagsList = mutableListOf<Int>()
-        flagsAdapter = FlagsAdapter(flagsList)
+        flagsAdapter = FlagsAdapter(this, flagsList)
         val flagsLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
         binding.rvMainActivityFlagsList.layoutManager = flagsLayoutManager
         binding.rvMainActivityFlagsList.adapter = flagsAdapter
