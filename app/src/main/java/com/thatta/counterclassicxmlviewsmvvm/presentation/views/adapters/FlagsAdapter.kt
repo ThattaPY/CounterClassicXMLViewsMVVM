@@ -1,15 +1,15 @@
 package com.thatta.counterclassicxmlviewsmvvm.presentation.views.adapters
 
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.thatta.counterclassicxmlviewsmvvm.R
 import com.thatta.counterclassicxmlviewsmvvm.databinding.FlagItemBinding
+import com.thatta.counterclassicxmlviewsmvvm.presentation.views.viewUtils.FlagDiffCallback
 
 class FlagsAdapter(
-    private val context: Context,
     private val flagsList: MutableList<Int>
 ) : RecyclerView.Adapter<FlagsAdapter.FlagsViewHolder>() {
 
@@ -17,7 +17,7 @@ class FlagsAdapter(
         RecyclerView.ViewHolder(itemBinding.root) {
         fun bind(flag: Int) {
             itemBinding.tvFlagItemNumber.text =
-                context.getString(R.string.value, flag.toString())
+                itemBinding.root.context.getString(R.string.value, flag.toString())
         }
     }
 
@@ -37,9 +37,11 @@ class FlagsAdapter(
 
     // Method to update the list of flags
     fun updateFlags(newFlags: List<Int>, recyclerView: RecyclerView) {
+        val diffCallback = FlagDiffCallback(flagsList, newFlags)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+
         flagsList.clear()
         flagsList.addAll(newFlags)
-        notifyItemInserted(flagsList.size - 1)
-        recyclerView.scrollToPosition(-flagsList.size - 1)
+        diffResult.dispatchUpdatesTo(this)
     }
 }

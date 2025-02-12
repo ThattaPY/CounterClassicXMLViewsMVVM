@@ -48,8 +48,11 @@ class MainActivity : AppCompatActivity() {
             binding.tvMainActivityCounter.text = getString(R.string.value, it.toString())
         }
 
-        // The observer has logic because it's UI-only logic
         counterViewModel.isCounterEnabled.observe(this) {
+            // Enable or disable the flag button depending on the counter state
+            binding.ibMainActivityFlag.isEnabled = it
+
+            // The observer has logic because it's UI-only logic
             if (it) {
                 binding.btnMainActivityStartCounter.text = this.getString(R.string.stop_counter)
             } else {
@@ -64,7 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initFlagsRecyclerView() {
         val flagsList = mutableListOf<Int>()
-        flagsAdapter = FlagsAdapter(this, flagsList)
+        flagsAdapter = FlagsAdapter(flagsList)
         val flagsLayoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true)
         binding.rvMainActivityFlagsList.layoutManager = flagsLayoutManager
         binding.rvMainActivityFlagsList.adapter = flagsAdapter
